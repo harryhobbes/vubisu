@@ -15,6 +15,6 @@
 - View Next Appointment
 - View Tomorrow's Appointments
 
-## Changlog
+## Changelog
 - Search Customer - fixed
 - New Customer - fixed
