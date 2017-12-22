@@ -3,7 +3,7 @@
 ### Customer
 - View Customer
 - Edit Customer
-- Clean up New Customer UI feedback
+- Clean up New Customer UI feedback - Redirect to view customer on save
 
 ### Services
 - CRUD
