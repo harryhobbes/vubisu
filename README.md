@@ -1,8 +1,6 @@
 # vubisu
 ## Todo
 ### Customer
-- View Customer
-- Edit Customer
 - Clean up New Customer UI feedback - Redirect to view customer on save
 
 ### Services
@@ -16,5 +14,7 @@
 - View Tomorrow's Appointments
 
 ## Changelog
+- View Customer
+- Edit Customer
 - Search Customer - fixed
 - New Customer - fixed
