@@ -12,7 +12,7 @@ public class DBHelper  extends SQLiteOpenHelper {
     //version number to upgrade database version
     //each time if you Add, Edit table, you need to change the
     //version number.
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Database Name
     private static final String DATABASE_NAME = "searchwidget.db";
@@ -29,6 +29,7 @@ public class DBHelper  extends SQLiteOpenHelper {
                 + Student.KEY_ID  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + Student.KEY_name + " TEXT, "
                 + Student.KEY_phone + " TEXT, "
+                + Student.KEY_notes + " TEXT, "
                 + Student.KEY_age + " INTEGER, "
                 + Student.KEY_email + " TEXT )";
 

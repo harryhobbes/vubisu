@@ -26,6 +26,7 @@ public class StudentRepo {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Student.KEY_age, student.age);
+        values.put(Student.KEY_notes, student.notes);
         values.put(Student.KEY_email,student.email);
         values.put(Student.KEY_phone, student.phone);
         values.put(Student.KEY_name, student.name);
@@ -45,6 +46,7 @@ public class StudentRepo {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Student.KEY_age, student.age);
+        values.put(Student.KEY_notes, student.notes);
         values.put(Student.KEY_email,student.email);
         values.put(Student.KEY_phone, student.phone);
         values.put(Student.KEY_name, student.name);
@@ -132,7 +134,9 @@ public class StudentRepo {
                 Student.KEY_ID,
                 Student.KEY_name,
                 Student.KEY_phone,
-                Student.KEY_email
+                Student.KEY_email,
+                Student.KEY_notes,
+                Student.KEY_age
         };
 
         String selection = Student.KEY_ID + " = ?";
@@ -149,7 +153,6 @@ public class StudentRepo {
                 null                                      // don't sort
         );
 
-
         int iCount =0;
         Student student = new Student();
 
@@ -159,6 +162,7 @@ public class StudentRepo {
                 student.name =cursor.getString(cursor.getColumnIndex(Student.KEY_name));
                 student.phone =cursor.getString(cursor.getColumnIndex(Student.KEY_phone));
                 student.email  =cursor.getString(cursor.getColumnIndex(Student.KEY_email));
+                student.notes = cursor.getString(cursor.getColumnIndex(Student.KEY_notes));
                 student.age =cursor.getInt(cursor.getColumnIndex(Student.KEY_age));
 
             } while (cursor.moveToNext());

@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".NewActivity" />
         <activity android:name=".EditActivity" />
+        <activity android:name=".ViewActivity" />
     </application>
 
 </manifest>

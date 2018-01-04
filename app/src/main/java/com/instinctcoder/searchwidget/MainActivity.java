@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     RecyclerAdapter recyclerAdapter;
     Cursor cursor;
-    StudentRepo studentRepo ;
+    StudentRepo studentRepo;
     private final static String TAG= MainActivity.class.getName().toString();
 
     @Override

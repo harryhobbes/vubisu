@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.instinctcoder.searchwidget.databinding.ActivityEditBinding;
 import com.instinctcoder.searchwidget.databinding.ActivityNewBinding;
 
 /**
@@ -37,6 +36,7 @@ public class NewActivity extends AppCompatActivity {
 
         //student.student_ID = binding._idEditText.getText().toString();
         student.name = binding.nameEditText.getText().toString();
+        student.notes = binding.notesEditText.getText().toString();
         student.phone = binding.phoneEditText.getText().toString();
 
         if (android.util.Patterns.EMAIL_ADDRESS.matcher(binding.emailEditText.getText()).matches()) {

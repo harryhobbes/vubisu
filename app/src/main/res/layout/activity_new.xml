@@ -14,7 +14,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
-            tools:context="com.instinctcoder.searchwidget.EditActivity">
+            tools:context="com.instinctcoder.searchwidget.Activity">
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/nameInputLayout"
@@ -67,7 +67,9 @@
                     android:id="@+id/notesEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapSentences|textAutoCorrect" />
+                    android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
+                    android:maxLines="4"
+                    android:scrollHorizontally="false" />
             </android.support.design.widget.TextInputLayout>
 
             <Button
