@@ -1,7 +1,6 @@
-package com.instinctcoder.searchwidget;
+package com.vubisu.acs;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
@@ -13,9 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.instinctcoder.searchwidget.databinding.ItemBinding;
+import com.vubisu.acs.databinding.ItemBinding;
 
 
 /**
@@ -102,7 +100,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             public void onPotato(View caller, int position) {
                 //Toast.makeText(mContext,"The Item Clicked is: "+ (position),Toast.LENGTH_SHORT).show();
-                Intent mIntent = new Intent(mContext, com.instinctcoder.searchwidget.ViewActivity.class);
+                Intent mIntent = new Intent(mContext, com.vubisu.acs.ViewActivity.class);
 
                 Bundle mBundle = new Bundle();
                 mBundle.putInt("position", position);

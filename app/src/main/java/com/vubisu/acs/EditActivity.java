@@ -1,18 +1,14 @@
-package com.instinctcoder.searchwidget;
+package com.vubisu.acs;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.instinctcoder.searchwidget.databinding.ActivityEditBinding;
+import com.vubisu.acs.databinding.ActivityEditBinding;
 
 /**
  * Created by JennineB on 5/10/2017.

@@ -1,4 +1,4 @@
-package com.instinctcoder.searchwidget;
+package com.vubisu.acs;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.instinctcoder.searchwidget.databinding.ActivityNewBinding;
+import com.vubisu.acs.databinding.ActivityNewBinding;
 
 /**
  * Created by JennineB on 5/10/2017.

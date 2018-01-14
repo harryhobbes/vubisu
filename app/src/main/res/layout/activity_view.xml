@@ -14,13 +14,13 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
-            tools:context="com.instinctcoder.searchwidget.ViewActivity">
+            tools:context="com.vubisu.acs.ViewActivity">
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/nameInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name">
+                android:hint="@string/customer_edit_name_hint">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/nameEditText"
@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/nameInputLayout"
-                android:hint="Phone Number">
+                android:hint="@string/customer_edit_phone_hint">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/phoneEditText"
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/phoneInputLayout"
-                android:hint="Email Address">
+                android:hint="@string/customer_edit_email_hint">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/emailEditText"
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/emailInputLayout"
-                android:hint="Notes">
+                android:hint="@string/customer_edit_note_hint">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/notesEditText"

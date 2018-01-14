@@ -1,16 +1,14 @@
-package com.instinctcoder.searchwidget;
+package com.vubisu.acs;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import com.instinctcoder.searchwidget.databinding.ActivityViewBinding;
+import com.vubisu.acs.databinding.ActivityViewBinding;
 
 /**
  * Created by JennineB on 5/10/2017.
@@ -49,7 +47,7 @@ public class ViewActivity extends AppCompatActivity {
         binding.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mIntent = new Intent(ViewActivity.this, com.instinctcoder.searchwidget.EditActivity.class);
+                Intent mIntent = new Intent(ViewActivity.this, com.vubisu.acs.EditActivity.class);
 
                 Bundle mBundle = new Bundle();
                 mBundle.putInt("recordId", student.student_ID);

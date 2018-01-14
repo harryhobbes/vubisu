@@ -1,4 +1,19 @@
 <resources>
-    <string name="app_name">Search Widget</string>
-    <string name="search_hint">Search student</string>
+    <!-- Global Strings -->
+    <string name="app_name">Vubisu ACS</string>
+    <string name="search_hint">Search</string>
+
+    <!-- New Customer Strings -->
+    <string name="customer_new_name_hint">Name (Jane Doe)</string>
+    <string name="customer_new_email_hint">Email Address (jane@hair.com)</string>
+    <string name="customer_new_phone_hint">Phone Number (0404 555 555)</string>
+    <string name="customer_new_note_hint">Notes</string>
+    <string name="customer_new_submit_button">Save New Customer</string>
+
+    <!-- Edit Customer Strings -->
+    <string name="customer_edit_name_hint">Name (Jane Doe)</string>
+    <string name="customer_edit_email_hint">Email Address (jane@hair.com)</string>
+    <string name="customer_edit_phone_hint">Phone Number (0404 555 555)</string>
+    <string name="customer_edit_note_hint">Notes</string>
+    <string name="customer_edit_submit_button">Save Changes</string>
 </resources>
