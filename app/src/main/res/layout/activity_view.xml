@@ -1,84 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:id="@+id/activity_first"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            tools:context="com.vubisu.acs.ViewActivity">
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/linear"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/customer_profile_background_holder"
+                android:scaleType="centerCrop"
+                android:layout_marginBottom="25dp"
+                />
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/nameInputLayout"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom">
+
+                <ImageView
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:src="@drawable/ic_customer_profile_holder" />
+
+            </LinearLayout>
+        </FrameLayout>
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/customer_edit_name_hint">
-
-                <android.support.design.widget.TextInputEditText
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_weight="2"
+                    android:id="@+id/nameInputLayout"
+                    android:textSize="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/customer_view_name_label"
+                    android:textColor="#a2a1b8"
+                    android:maxLength="12"
+                    android:background="#0000"
+                    android:padding="16dp"
+                    android:gravity="left"
+                    />
+                <TextView
+                    android:layout_weight="1"
                     android:id="@+id/nameEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/phoneInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/nameInputLayout"
-                android:hint="@string/customer_edit_phone_hint">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/phoneEditText"
+                    android:textSize="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text|phone" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/emailInputLayout"
+                    android:hint="@string/customer_view_name_hint"
+                    android:textColorHint="#181737"
+                    android:textColor="#181737"
+                    android:background="#0000"
+                    android:padding="16dp"
+                    android:gravity="right"
+                    />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dad8d8"/>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/phoneInputLayout"
-                android:hint="@string/customer_edit_email_hint">
-
-                <android.support.design.widget.TextInputEditText
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_weight="2"
+                    android:id="@+id/emailInputLayout"
+                    android:textSize="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/customer_view_email_label"
+                    android:textColor="#a2a1b8"
+                    android:maxLength="12"
+                    android:background="#0000"
+                    android:padding="16dp"
+                    android:gravity="left"/>
+                <TextView
+                    android:layout_weight="1"
                     android:id="@+id/emailEditText"
+                    android:textSize="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
-            </android.support.design.widget.TextInputLayout>
+                    android:textColorHint="#1b193b"
+                    android:hint="@string/customer_view_email_hint"
+                    android:textColor="#181737"
+                    android:background="#0000"
+                    android:padding="16dp"
+                    android:gravity="right"
+                    />
+            </LinearLayout>
+            />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dad8d8"/>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/notesInputLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/emailInputLayout"
-                android:hint="@string/customer_edit_note_hint">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/notesEditText"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_weight="2"
+                    android:id="@+id/phoneInputLayout"
+                    android:textSize="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapSentences|textAutoCorrect" />
-            </android.support.design.widget.TextInputLayout>
+                    android:text="@string/customer_view_phone_label"
+                    android:textColor="#a2a1b8"
+                    android:background="#0000"
+                    android:padding="16dp"
+                    android:gravity="left"
+                    />
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/phoneEditText"
+                    android:textSize="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="#1b193b"
+                    android:inputType="phone"
+                    android:hint="@string/customer_view_phone_hint"
+                    android:textColor="#181737"
+                    android:maxLength="12"
+                    android:background="#0000"
+                    android:padding="16dp"
+                    android:gravity="right"
+                    />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dad8d8"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/notesInputLayout"
+                    android:textSize="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/customer_view_note_label"
+                    android:textColor="#a2a1b8"
+                    android:maxLength="12"
+                    android:background="#0000"
+                    android:padding="16dp"
+                    android:gravity="left"
+                    />
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/notesEditText"
+                    android:textSize="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/customer_view_note_hint"
+                    android:textColorHint="#181737"
+                    android:background="#0000"
+                    android:padding="16dp"
+                    android:paddingBottom="30dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
 
-            <Button
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/floating_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.FloatingActionButton
                 android:id="@+id/editButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/notesInputLayout"
-                android:layout_marginBottom="30dp"
-                android:text="Edit" />
-
-        </RelativeLayout>
-    </ScrollView>
+                android:layout_gravity="bottom|right"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_mode_edit_black_24dp" />
+        </android.support.design.widget.CoordinatorLayout>
+    </RelativeLayout>
 </layout>

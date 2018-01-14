@@ -1,4 +1,6 @@
 <resources>
+    <!-- String rules: https://medium.com/google-developer-experts/android-strings-xml-things-to-remember-c155025bb8bb -->
+
     <!-- Global Strings -->
     <string name="app_name">Vubisu ACS</string>
     <string name="search_hint">Search</string>
@@ -16,4 +18,14 @@
     <string name="customer_edit_phone_hint">Phone Number (0404 555 555)</string>
     <string name="customer_edit_note_hint">Notes</string>
     <string name="customer_edit_submit_button">Save Changes</string>
+
+    <!-- View Customer Strings -->
+    <string name="customer_view_name_label">Name:</string>
+    <string name="customer_view_name_hint">Jane Doe</string>
+    <string name="customer_view_email_label">Email:</string>
+    <string name="customer_view_email_hint">jane@hair.com</string>
+    <string name="customer_view_phone_label">Phone:</string>
+    <string name="customer_view_phone_hint">0404 555 555</string>
+    <string name="customer_view_note_label">Notes:</string>
+    <string name="customer_view_note_hint">No notes for this customer yet</string>
 </resources>

@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
         binding.recycleView.setLayoutManager(new LinearLayoutManager(this));
         binding.recycleView.setHasFixedSize(true);
 
+        //if(cursor==null) insertDummy();
+
         // Create and set the recyclerview and adapter
         studentRepo = new StudentRepo(this);
         cursor=studentRepo.getStudentList();
         recyclerAdapter = new RecyclerAdapter(this, cursor);
         binding.recycleView.setAdapter(recyclerAdapter);
-
-        if(cursor==null) insertDummy();
 
         // Create onclick listener on floating action button
         binding.newButton.setOnClickListener(new View.OnClickListener() {
