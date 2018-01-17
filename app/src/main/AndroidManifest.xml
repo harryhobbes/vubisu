@@ -19,9 +19,15 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name="com.vubisu.acs.NewActivity" />
+        <activity
+            android:name="com.vubisu.acs.NewActivity"
+            android:parentActivityName="com.vubisu.acs.MainActivity"
+        />
         <activity android:name="com.vubisu.acs.EditActivity" />
-        <activity android:name="com.vubisu.acs.ViewActivity" />
+        <activity
+            android:name="com.vubisu.acs.ViewActivity"
+            android:parentActivityName="com.vubisu.acs.MainActivity"
+        />
     </application>
 
 </manifest>

@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.vubisu.acs.databinding.ActivityEditBinding;
 
 /**
- * Created by JennineB on 5/10/2017.
+ * Created by harryhobbes on 5/10/2017.
  */
 
 public class EditActivity extends AppCompatActivity {
@@ -46,12 +46,20 @@ public class EditActivity extends AppCompatActivity {
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveToDB(student.student_ID);
+            if (saveToDB(student.student_ID) == 1) {
+                Intent mIntent = new Intent(EditActivity.this, com.vubisu.acs.ViewActivity.class);
+
+                Bundle mBundle = new Bundle();
+                mBundle.putInt("recordId", student.student_ID);
+
+                mIntent.putExtras(mBundle);
+                EditActivity.this.startActivity(mIntent);
+            }
             }
         });
     }
 
-    private void saveToDB(int recordId) {
+    private int saveToDB(int recordId) {
         Student student= new Student();
 
         student.student_ID = recordId;
@@ -59,16 +67,19 @@ public class EditActivity extends AppCompatActivity {
         student.phone = binding.phoneEditText.getText().toString();
         student.notes = binding.notesEditText.getText().toString();
 
-        if (android.util.Patterns.EMAIL_ADDRESS.matcher(binding.emailEditText.getText()).matches()) {
+        if (binding.emailEditText.length() == 0 ||
+                android.util.Patterns.EMAIL_ADDRESS.matcher(binding.emailEditText.getText()).matches()) {
             student.email = binding.emailEditText.getText().toString();
         }
         else {
             Toast.makeText(this, "Email is in the wrong format", Toast.LENGTH_LONG).show();
-            return;
+            return 0;
         }
 
         int rowsAffected = studentRepo.update(student);
 
         Toast.makeText(this, "Total rows updated: " + rowsAffected, Toast.LENGTH_LONG).show();
+
+        return rowsAffected;
     }
 }

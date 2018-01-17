@@ -6,7 +6,7 @@ android {
     dataBinding.enabled = true
 
     defaultConfig {
-        applicationId "com.instinctcoder.searchwidget"
+        applicationId "com.vubisu.acs"
         minSdkVersion 11
         targetSdkVersion 25
         versionCode 1

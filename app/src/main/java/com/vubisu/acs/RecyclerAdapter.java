@@ -17,7 +17,7 @@ import com.vubisu.acs.databinding.ItemBinding;
 
 
 /**
- * Created by JennineB on 5/10/2017.
+ * Created by harryhobbes on 5/10/2017.
  */
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
@@ -121,8 +121,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     public void updateCursor(Cursor cursor) {
-        if (cursor != null){
+        // Check for existing cursor and close
+        if (mCursor != null) {
             mCursor.close();
+        }
+
+        // Update with new cursor
+        if (cursor != null){
             mCursor = cursor;
         }
     }

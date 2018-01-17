@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
- * Created by Tan on 3/14/2016.
+ * Created by harryhobbes on 3/14/2016.
  */
 
 
@@ -59,7 +59,7 @@ public class StudentRepo {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] columns = {
-                "rowid as " + Student.KEY_ROWID,
+                "rowid as " + Student._ID,
                 Student.KEY_ID,
                 Student.KEY_name,
                 Student.KEY_phone,
@@ -91,7 +91,7 @@ public class StudentRepo {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] columns = {
-                "rowid as " + Student.KEY_ROWID,
+                "rowid as " + Student._ID,
                 Student.KEY_ID,
                 Student.KEY_name,
                 Student.KEY_phone,
@@ -127,7 +127,7 @@ public class StudentRepo {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] columns = {
-                "rowid as " + Student.KEY_ROWID,
+                "rowid as " + Student._ID,
                 Student.KEY_ID,
                 Student.KEY_name,
                 Student.KEY_phone,

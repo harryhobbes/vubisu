@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerAdapter recyclerAdapter;
     Cursor cursor;
     StudentRepo studentRepo;
+    SearchManager searchManager;
+    SearchView searchView;
     private final static String TAG= MainActivity.class.getName().toString();
 
     @Override
@@ -36,19 +38,17 @@ public class MainActivity extends AppCompatActivity {
         binding.recycleView.setLayoutManager(new LinearLayoutManager(this));
         binding.recycleView.setHasFixedSize(true);
 
-        //if(cursor==null) insertDummy();
-
         // Create and set the recyclerview and adapter
         studentRepo = new StudentRepo(this);
-        cursor=studentRepo.getStudentList();
-        recyclerAdapter = new RecyclerAdapter(this, cursor);
+        //cursor=studentRepo.getStudentList();
+        recyclerAdapter = new RecyclerAdapter(this, null);
         binding.recycleView.setAdapter(recyclerAdapter);
 
         // Create onclick listener on floating action button
         binding.newButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, com.vubisu.acs.NewActivity.class));
+            startActivity(new Intent(MainActivity.this, com.vubisu.acs.NewActivity.class));
             }
         });
     }
@@ -57,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
 
+        if (searchView != null && searchView.getQuery().length() != 0) {
+            recyclerAdapter.updateCursor(studentRepo.getStudentListByKeyword(searchView.getQuery().toString()));
+        } else {
+            recyclerAdapter.updateCursor(studentRepo.getStudentList());
+        }
+        recyclerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -66,11 +72,11 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.options_menu, menu);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-            SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
-            search.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+            searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-            search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
                 @Override
                 public boolean onQueryTextSubmit(String s) {
@@ -99,61 +105,4 @@ public class MainActivity extends AppCompatActivity {
         return true;
 
     }
-
-    private void insertDummy(){
-        Student student= new Student();
-
-        student.age=22;
-        student.email="tanwoonhow@intstinctcoder.com";
-        student.phone="0411782111";
-        student.name="Tan Woon How";
-        studentRepo.insert(student);
-
-        studentRepo = new StudentRepo(this);
-        student.age=20;
-        student.email="Jimmy@intstinctcoder.com";
-        student.phone="0411782221";
-        student.name="Jimmy Tan Yao Lin";
-        studentRepo.insert(student);
-
-        studentRepo = new StudentRepo(this);
-        student.age=21;
-        student.email="Robert@intstinctcoder.com";
-        student.phone="0422782111";
-        student.name="Robert Pattinson";
-        studentRepo.insert(student);
-
-        studentRepo = new StudentRepo(this);
-        student.age=19;
-        student.email="jason@intstinctcoder.com";
-        student.phone="0411222111";
-        student.name="Jason Tan";
-        studentRepo.insert(student);
-
-
-        studentRepo = new StudentRepo(this);
-        student.age=18;
-        student.email="bftan@intstinctcoder.com";
-        student.phone="0411782122";
-        student.name="Tan Bor Feng";
-        studentRepo.insert(student);
-
-
-        studentRepo = new StudentRepo(this);
-        student.age=23;
-        student.email="janet@intstinctcoder.com";
-        student.phone="0412282111";
-        student.name="Janelle Monae";
-        studentRepo.insert(student);
-
-
-        studentRepo = new StudentRepo(this);
-        student.age=21;
-        student.email="james@intstinctcoder.com";
-        student.phone="0411782333";
-        student.name="James Harden";
-        studentRepo.insert(student);
-
-    }
-
 }

@@ -1,5 +1,6 @@
 package com.vubisu.acs;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,13 +10,14 @@ import android.widget.Toast;
 import com.vubisu.acs.databinding.ActivityNewBinding;
 
 /**
- * Created by JennineB on 5/10/2017.
+ * Created by harryhobbes on 5/10/2017.
  */
 
 public class NewActivity extends AppCompatActivity {
 
     private ActivityNewBinding binding;
     StudentRepo studentRepo ;
+    int newRowId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +28,21 @@ public class NewActivity extends AppCompatActivity {
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveToDB();
+
+            if ((newRowId = saveToDB()) > 0) {
+                Intent mIntent = new Intent(NewActivity.this, com.vubisu.acs.ViewActivity.class);
+
+                Bundle mBundle = new Bundle();
+                mBundle.putInt("recordId", newRowId);
+
+                mIntent.putExtras(mBundle);
+                NewActivity.this.startActivity(mIntent);
+            }
             }
         });
     }
 
-    private void saveToDB() {
+    private int saveToDB() {
         Student student= new Student();
 
         //student.student_ID = binding._idEditText.getText().toString();
@@ -39,16 +50,19 @@ public class NewActivity extends AppCompatActivity {
         student.notes = binding.notesEditText.getText().toString();
         student.phone = binding.phoneEditText.getText().toString();
 
-        if (android.util.Patterns.EMAIL_ADDRESS.matcher(binding.emailEditText.getText()).matches()) {
+        if (binding.emailEditText.length() == 0 ||
+                android.util.Patterns.EMAIL_ADDRESS.matcher(binding.emailEditText.getText()).matches()) {
             student.email = binding.emailEditText.getText().toString();
         }
         else {
             Toast.makeText(this, "Email is in the wrong format", Toast.LENGTH_LONG).show();
-            return;
+            return 0;
         }
 
         int newRowId = studentRepo.insert(student);
 
-        Toast.makeText(this, "The new Row Id is " + newRowId, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "The new Row Id is " + newRowId, Toast.LENGTH_LONG).show();
+
+        return newRowId;
     }
 }

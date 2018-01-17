@@ -1,7 +1,7 @@
 package com.vubisu.acs;
 
 /**
- * Created by Tan on 3/14/2016.
+ * Created by harryhobbes on 3/14/2016.
  */
 
 import android.content.Context;
@@ -24,23 +24,15 @@ public class DBHelper  extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //All necessary tables you like to create will create here
-
-        String CREATE_TABLE_STUDENT = "CREATE TABLE " + Student.TABLE  + "("
-                + Student.KEY_ID  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
-                + Student.KEY_name + " TEXT, "
-                + Student.KEY_phone + " TEXT, "
-                + Student.KEY_notes + " TEXT, "
-                + Student.KEY_age + " INTEGER, "
-                + Student.KEY_email + " TEXT )";
-
-        db.execSQL(CREATE_TABLE_STUDENT);
-
+        db.execSQL(Student.CREATE_TABLE);
+        db.execSQL(Appointment.CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed, all data will be gone!!!
         db.execSQL("DROP TABLE IF EXISTS " + Student.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + Appointment.TABLE);
 
         // Create tables again
         onCreate(db);

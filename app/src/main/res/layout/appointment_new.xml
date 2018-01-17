@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CheckBox android:id="@+id/checkbox_meat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:padding="16dp"
+                android:text="Option1"
+                android:onClick="onCheckboxClicked"/>
+            <CheckBox android:id="@+id/checkbox_cheese"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:padding="16dp"
+                android:text="Option2"
+                android:onClick="onCheckboxClicked"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/notesInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/appointment_new_note_hint">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/notesEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
+                    android:maxLines="4"
+                    android:scrollHorizontally="false" />
+
+            </android.support.design.widget.TextInputLayout>
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/notesInputLayout"
+                android:text="@string/appointment_new_submit_button" />
+        </LinearLayout>
+    </ScrollView>
+</layout>
