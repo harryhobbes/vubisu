@@ -4,34 +4,62 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
 
 /**
  * Created by harryhobbes on 3/14/2016.
  */
-
-
-public class StudentRepo {
-    private DBHelper dbHelper;
+public class StudentRepo extends DBRepo {
 
     public StudentRepo(Context context) {
-        dbHelper = new DBHelper(context);
+        super(context, Student.TABLE);
     }
 
-    public int insert(Student student) {
-
-        //Open connection to write data
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+    private ContentValues getContentValues(String context, Student student) {
         ContentValues values = new ContentValues();
+
         values.put(Student.KEY_age, student.age);
         values.put(Student.KEY_notes, student.notes);
         values.put(Student.KEY_email,student.email);
         values.put(Student.KEY_phone, student.phone);
         values.put(Student.KEY_name, student.name);
 
-        // Inserting Row
-        long student_Id = db.insert(Student.TABLE, null, values);
-        db.close(); // Closing database connection
-        return (int) student_Id;
+        return values;
+    }
+
+    private String[] getStringArray(String context) {
+
+        String[] columns;
+
+        switch (context) {
+            case "view":
+                columns = new String[]{
+                        "rowid as " + Student._ID,
+                        Student.KEY_ID,
+                        Student.KEY_name,
+                        Student.KEY_phone,
+                        Student.KEY_email,
+                        Student.KEY_notes,
+                        Student.KEY_age
+                };
+                break;
+            case "list":
+            default:
+                columns = new String[]{
+                        "rowid as " + Student._ID,
+                        Student.KEY_ID,
+                        Student.KEY_name,
+                        Student.KEY_phone,
+                        Student.KEY_email
+                };
+                break;
+        }
+
+        return columns;
+    }
+
+    public int insert(Student student) {
+        return super.insert(getContentValues("insert", student));
     }
 
     public int update(Student student) {
@@ -40,64 +68,21 @@ public class StudentRepo {
             return 0;
         }
 
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(Student.KEY_age, student.age);
-        values.put(Student.KEY_notes, student.notes);
-        values.put(Student.KEY_email,student.email);
-        values.put(Student.KEY_phone, student.phone);
-        values.put(Student.KEY_name, student.name);
-
-        String whereClause = student.KEY_ID + " = ?";
-        String[] whereArgs = {String.valueOf(student.student_ID)};
-
-        return db.update(student.TABLE, values, whereClause, whereArgs);
+        return super.update(getContentValues("update", student), Student.KEY_ID, student.student_ID);
     }
 
     public Cursor getStudentList() {
-        //Open connection to read only
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        String[] columns = {
-                "rowid as " + Student._ID,
-                Student.KEY_ID,
-                Student.KEY_name,
-                Student.KEY_phone,
-                Student.KEY_email
-        };
-
-        Cursor cursor = db.query(
-                Student.TABLE,                            // The table to query
-                columns,                                  // The columns to return
-                null,                                     // The columns for the WHERE clause
-                null,                                     // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                                      // don't sort
+        return super.getList(
+                getStringArray("list"),
+                null,
+                null,
+                null,
+                null,
+                null
         );
-        // looping through all rows and adding to list
-        if (!cursor.moveToFirst()) {
-            cursor.close();
-            return null;
-        }
-        return cursor;
-
-
     }
 
-
     public Cursor getStudentListByKeyword(String search) {
-        //Open connection to read only
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        String[] columns = {
-                "rowid as " + Student._ID,
-                Student.KEY_ID,
-                Student.KEY_name,
-                Student.KEY_phone,
-                Student.KEY_email
-        };
-
         String selection = Student.KEY_name + " LIKE ? or " +
                 Student.KEY_phone + " LIKE ?";
 
@@ -106,48 +91,28 @@ public class StudentRepo {
                 "%" + search + "%"
         };
 
-        Cursor cursor = db.query(
-                Student.TABLE,                            // The table to query
-                columns,                               // The columns to return
-                selection,                                // The columns for the WHERE clause
-                selectionArgs,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                                      // don't sort
+        return super.getList(
+                getStringArray("list"),
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
         );
-        // looping through all rows and adding to list
-        if (!cursor.moveToFirst()) {
-            cursor.close();
-            return null;
-        }
-        return cursor;
     }
 
     public Student getStudentById(int id){
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        String[] columns = {
-                "rowid as " + Student._ID,
-                Student.KEY_ID,
-                Student.KEY_name,
-                Student.KEY_phone,
-                Student.KEY_email,
-                Student.KEY_notes,
-                Student.KEY_age
-        };
-
         String selection = Student.KEY_ID + " = ?";
 
         String[] selectionArgs = {String.valueOf(id)};
 
-        Cursor cursor = db.query(
-                Student.TABLE,                            // The table to query
-                columns,                               // The columns to return
-                selection,                                // The columns for the WHERE clause
-                selectionArgs,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                                      // don't sort
+        Cursor cursor = super.getList(
+                getStringArray("view"),
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
         );
 
         int iCount =0;
@@ -166,7 +131,6 @@ public class StudentRepo {
         }
 
         cursor.close();
-        db.close();
         return student;
     }
 }

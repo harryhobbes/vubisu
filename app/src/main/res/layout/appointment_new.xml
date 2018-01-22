@@ -1,50 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="#a4a4a4">
+
+        <EditText android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date"
+            android:value="2018-01-17"
+            android:hint="2018-01-17"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="Cuts" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:orientation="vertical">
 
-            <CheckBox android:id="@+id/checkbox_meat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16dp"
-                android:padding="16dp"
-                android:text="Option1"
-                android:onClick="onCheckboxClicked"/>
-            <CheckBox android:id="@+id/checkbox_cheese"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16dp"
-                android:padding="16dp"
-                android:text="Option2"
-                android:onClick="onCheckboxClicked"/>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/notesInputLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/appointment_new_note_hint">
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/notesEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
-                    android:maxLines="4"
-                    android:scrollHorizontally="false" />
+                android:layout_height="wrap_content">
 
-            </android.support.design.widget.TextInputLayout>
+                <Switch
+                    android:id="@+id/switch1"
+                    android:layout_width="199dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/appointment_new_ladies_cut_blowdry_label"/>
+
+                <EditText
+                    android:id="@+id/editText1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="4"
+                    android:layout_weight="2"
+                    android:hint="@string/appointment_new_ladies_cut_blowdry_hint"
+                    android:inputType="number"
+                    android:enabled="false"
+                    android:text="@string/appointment_new_ladies_cut_blowdry_text" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:id="@+id/switch2"
+                    android:layout_width="199dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/appointment_new_ladies_restyle_blowdry_label" />
+
+                <EditText
+                    android:id="@+id/editText2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="4"
+                    android:layout_weight="2"
+                    android:hint="@string/appointment_new_ladies_restyle_blowdry_hint"
+                    android:inputType="number"
+                    android:enabled="false"
+                    android:text="@string/appointment_new_ladies_restyle_blowdry_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:id="@+id/switch3"
+                    android:layout_width="199dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/appointment_new_mens_cut_finish_label"/>
+
+                <EditText
+                    android:id="@+id/editText3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="4"
+                    android:layout_weight="2"
+                    android:hint="@string/appointment_new_mens_cut_finish_hint"
+                    android:inputType="number"
+                    android:enabled="false"
+                    android:text="@string/appointment_new_mens_cut_finish_text" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:id="@+id/switch4"
+                    android:layout_width="199dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/appointment_new_mens_clipper_cut_label" />
+
+                <EditText
+                    android:id="@+id/editText4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="4"
+                    android:layout_weight="2"
+                    android:hint="@string/appointment_new_mens_clipper_cut_hint"
+                    android:inputType="number"
+                    android:enabled="false"
+                    android:text="@string/appointment_new_mens_clipper_cut_text" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/appointment_new_colour_demi_text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:id="@+id/switch5"
+                    android:layout_width="199dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/appointment_new_colour_demi_short_label"/>
+
+                <EditText
+                    android:id="@+id/editText5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="4"
+                    android:layout_weight="2"
+                    android:hint="@string/appointment_new_colour_demi_short_hint"
+                    android:inputType="number"
+                    android:enabled="false"
+                    android:text="@string/appointment_new_colour_demi_short_text" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:id="@+id/switch6"
+                    android:layout_width="199dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/appointment_new_colour_demi_medium_label" />
+
+                <EditText
+                    android:id="@+id/editText6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="4"
+                    android:layout_weight="2"
+                    android:hint="@string/appointment_new_colour_demi_medium_hint"
+                    android:inputType="number"
+                    android:enabled="false"
+                    android:text="@string/appointment_new_colour_demi_medium_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:id="@+id/switch7"
+                    android:layout_width="199dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/appointment_new_colour_demi_long_label"/>
+
+                <EditText
+                    android:id="@+id/editText7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="4"
+                    android:layout_weight="2"
+                    android:hint="@string/appointment_new_colour_demi_long_hint"
+                    android:inputType="number"
+                    android:enabled="false"
+                    android:text="@string/appointment_new_colour_demi_long_text" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <EditText android:id="@+id/notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/appointment_new_cancel_button"/>
+
             <Button
                 android:id="@+id/saveButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/notesInputLayout"
                 android:text="@string/appointment_new_submit_button" />
+
         </LinearLayout>
-    </ScrollView>
+
+    </LinearLayout>
 </layout>

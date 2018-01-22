@@ -11,7 +11,7 @@ public class Appointment implements BaseColumns {
     public static final String TABLE = "Appointment";
 
     public static final String KEY_ID = "id";
-    public static final String KEY_start = "start";;
+    public static final String KEY_start = "start";
     public static final String KEY_customer_id = "customer_id";
     public static final String KEY_notes = "notes";
 
@@ -19,15 +19,14 @@ public class Appointment implements BaseColumns {
             TABLE + " (" +
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             KEY_start + " INTEGER, " +
-            KEY_notes + " STRING, " +
+            KEY_notes + " TEXT, " +
             KEY_customer_id + " INTEGER, " +
             "FOREIGN KEY(" + KEY_customer_id + ") REFERENCES " +
             Student.TABLE + "(" + Student.KEY_ID + ") " + ")";
 
     // property help us to keep data
     public int appointment_ID;
-    public SimpleDateFormat start;
+    public int start;
     public int customer_ID;
-    public Student customer;
     public String notes;
 }

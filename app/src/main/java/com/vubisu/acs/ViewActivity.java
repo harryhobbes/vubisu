@@ -17,6 +17,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
 
 import com.vubisu.acs.databinding.ActivityViewBinding;
+import com.vubisu.acs.databinding.AppointmentNewBinding;
 
 /**
  * Created by harryhobbes on 5/10/2017.
@@ -25,6 +26,7 @@ import com.vubisu.acs.databinding.ActivityViewBinding;
 public class ViewActivity extends AppCompatActivity {
 
     private ActivityViewBinding binding;
+    private AppointmentNewBinding bindingApp;
     Cursor cursor;
     StudentRepo studentRepo;
     Student student;
@@ -95,8 +97,8 @@ public class ViewActivity extends AppCompatActivity {
                 // Initialize a new instance of popup window
                 mPopupWindow = new PopupWindow(
                         customView,
-                        LayoutParams.WRAP_CONTENT,
-                        LayoutParams.WRAP_CONTENT
+                        LayoutParams.MATCH_PARENT,
+                        LayoutParams.MATCH_PARENT
                 );
 
                 // Set an elevation value for popup window

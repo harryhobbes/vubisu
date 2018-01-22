@@ -18,39 +18,39 @@ import android.database.Cursor;
 import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
-import com.vubisu.acs.databinding.ActivityMainBinding;
+import com.vubisu.acs.databinding.ActivityServiceListBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class ServiceListActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
-    RecyclerAdapter recyclerAdapter;
+    private ActivityServiceListBinding binding;
+    ServiceListAdapter serviceListAdapter;
     Cursor cursor;
-    StudentRepo studentRepo;
+    ServiceRepo serviceRepo;
     SearchManager searchManager;
     SearchView searchView;
-    private final static String TAG= MainActivity.class.getName().toString();
+    private final static String TAG= ServiceListActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_service_list);
 
         // Bind the view
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_service_list);
         binding.recycleView.setLayoutManager(new LinearLayoutManager(this));
         binding.recycleView.setHasFixedSize(true);
 
         // Create and set the recyclerview and adapter
-        studentRepo = new StudentRepo(this);
+        serviceRepo = new ServiceRepo(this);
 
-        recyclerAdapter = new RecyclerAdapter(this, null);
-        binding.recycleView.setAdapter(recyclerAdapter);
+        serviceListAdapter = new ServiceListAdapter(cursor);
+        binding.recycleView.setAdapter(serviceListAdapter);
 
         // Create onclick listener on floating action button
         binding.newButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            startActivity(new Intent(MainActivity.this, com.vubisu.acs.NewActivity.class));
+                startActivity(new Intent(ServiceListActivity.this, com.vubisu.acs.ServiceNewActivity.class));
             }
         });
     }
@@ -60,11 +60,11 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         if (searchView != null && searchView.getQuery().length() != 0) {
-            recyclerAdapter.updateCursor(studentRepo.getStudentListByKeyword(searchView.getQuery().toString()));
+            serviceListAdapter.updateCursor(serviceRepo.getServiceListByKeyword(searchView.getQuery().toString()));
         } else {
-            recyclerAdapter.updateCursor(studentRepo.getStudentList());
+            serviceListAdapter.updateCursor(serviceRepo.getServiceList());
         }
-        recyclerAdapter.notifyDataSetChanged();
+        serviceListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -83,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onQueryTextSubmit(String s) {
                     Log.d(TAG, "onQueryTextSubmit ");
-                    cursor=studentRepo.getStudentListByKeyword(s);
-                    recyclerAdapter.updateCursor(cursor);
-                    recyclerAdapter.notifyDataSetChanged();
+                    cursor=serviceRepo.getServiceListByKeyword(s);
+                    serviceListAdapter.updateCursor(cursor);
+                    serviceListAdapter.notifyDataSetChanged();
                     binding.recycleView.scrollToPosition(0);
                     return false;
                 }
@@ -93,19 +93,15 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onQueryTextChange(String s) {
                     Log.d(TAG, "onQueryTextChange ");
-                    cursor=studentRepo.getStudentListByKeyword(s);
-                    recyclerAdapter.updateCursor(cursor);
-                    recyclerAdapter.notifyDataSetChanged();
+                    cursor=serviceRepo.getServiceListByKeyword(s);
+                    serviceListAdapter.updateCursor(cursor);
+                    serviceListAdapter.notifyDataSetChanged();
                     binding.recycleView.scrollToPosition(0);
                     return false;
                 }
-
             });
-
         }
-
         return true;
-
     }
 
     @Override
@@ -113,12 +109,12 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
             case R.id.customers:
-                Toast.makeText(this, "Customers selected", Toast.LENGTH_SHORT)
-                        .show();
+                startActivity(new Intent(ServiceListActivity.this, com.vubisu.acs.MainActivity.class));
                 break;
             // action with ID action_settings was selected
             case R.id.services:
-                startActivity(new Intent(MainActivity.this, com.vubisu.acs.ServiceListActivity.class));
+                Toast.makeText(this, "Services selected", Toast.LENGTH_SHORT)
+                        .show();
                 break;
             default:
                 break;

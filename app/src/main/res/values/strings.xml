@@ -5,6 +5,14 @@
     <string name="app_name">Vubisu ACS</string>
     <string name="search_hint">Search</string>
 
+    <!-- Navigation Strings -->
+    <string name="nav_customers">Customers</string>
+    <string name="nav_services">Services</string>
+
+    <!-- List Customer Strings -->
+    <string name="customer_list_name_hint">Joe Citizen</string>
+    <string name="customer_list_phone_hint">0404 555 555</string>
+
     <!-- New Customer Strings -->
     <string name="customer_new_name_hint">Name (Jane Doe)</string>
     <string name="customer_new_email_hint">Email Address (jane@hair.com)</string>
@@ -29,6 +37,31 @@
     <string name="customer_view_note_label">Notes:</string>
     <string name="customer_view_note_hint"></string>
 
+    <!-- List Service Strings -->
+    <string name="service_list_name_hint">Cut and Colour</string>
+    <string name="service_list_group_hint">Standard Services</string>
+    <string name="service_list_price_hint">$99.00</string>
+
+    <!-- New Service Strings -->
+    <string name="service_new_name_hint">Name (Cut and Colour)</string>
+    <string name="service_new_group_hint">Group (Standard Services)</string>
+    <string name="service_new_price_hint">Price ($99.00)</string>
+    <string name="service_new_submit_button">Save New Service</string>
+
+    <!-- Edit Service Strings -->
+    <string name="service_edit_name_hint">Name (Cut and Colour)</string>
+    <string name="service_edit_group_hint">Group (Standard Services)</string>
+    <string name="service_edit_price_hint">Price ($99.00)</string>
+    <string name="service_edit_submit_button">Save Changes</string>
+
+    <!-- View Service Strings -->
+    <string name="service_view_name_label">Name:</string>
+    <string name="service_view_name_hint"></string>
+    <string name="service_view_group_label">Group:</string>
+    <string name="service_view_group_hint"></string>
+    <string name="service_view_price_label">Price:</string>
+    <string name="service_view_price_hint"></string>
+
     <!-- New Appointment Strings -->
     <string name="appointment_new_date_label">Date:</string>
     <string name="appointment_new_date_hint">24/06/2018</string>
@@ -36,4 +69,30 @@
     <string name="appointment_new_note_label">Note:</string>
     <string name="appointment_new_note_hint">Notes</string>
     <string name="appointment_new_submit_button">Add Appointment</string>
+    <string name="appointment_new_cancel_button">Cancel</string>
+    <!-- Cuts Group -->
+    <string name="appointment_new_cuts_text">Cuts</string>
+    <string name="appointment_new_ladies_cut_blowdry_label">Ladies - Style Cut and Blowdry</string>
+    <string name="appointment_new_ladies_cut_blowdry_text">$90</string>
+    <string name="appointment_new_ladies_cut_blowdry_hint">$90</string>
+    <string name="appointment_new_ladies_restyle_blowdry_label">Ladies - Restyle and Blowdry</string>
+    <string name="appointment_new_ladies_restyle_blowdry_text">$100</string>
+    <string name="appointment_new_ladies_restyle_blowdry_hint">$100</string>
+    <string name="appointment_new_mens_cut_finish_label">Mens - Style Cut and Finish</string>
+    <string name="appointment_new_mens_cut_finish_text">$60</string>
+    <string name="appointment_new_mens_cut_finish_hint">$60</string>
+    <string name="appointment_new_mens_clipper_cut_label">Mens - Clipper Cut</string>
+    <string name="appointment_new_mens_clipper_cut_text">$25</string>
+    <string name="appointment_new_mens_clipper_cut_hint">$25</string>
+    <!-- Colour Group -->
+    <string name="appointment_new_colour_demi_text">Colour - DEMI PERMANENT (Ammonia Free)</string>
+    <string name="appointment_new_colour_demi_short_label">Short</string>
+    <string name="appointment_new_colour_demi_short_text">$80</string>
+    <string name="appointment_new_colour_demi_short_hint">$80</string>
+    <string name="appointment_new_colour_demi_medium_label">Medium</string>
+    <string name="appointment_new_colour_demi_medium_text">$95</string>
+    <string name="appointment_new_colour_demi_medium_hint">$95</string>
+    <string name="appointment_new_colour_demi_long_label">Long</string>
+    <string name="appointment_new_colour_demi_long_text">$120</string>
+    <string name="appointment_new_colour_demi_long_hint">$120</string>
 </resources>
