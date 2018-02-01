@@ -12,6 +12,10 @@ import java.text.SimpleDateFormat;
  */
 public class AppointmentRepo extends DBRepo {
 
+    final String APP_TABLE = "appointment";
+    final String SER_TABLE = "service";
+    final String APPSER_TABLE = "app_ser";
+
     public AppointmentRepo(Context context) {
         super(context, Appointment.TABLE);
     }
@@ -78,17 +82,17 @@ public class AppointmentRepo extends DBRepo {
     }
 
     protected String getRawAppointmentWithServicesQueryString() {
-        return "SELECT * FROM " + Appointment.TABLE + " a " +
-                " INNER JOIN " + AppointmentService.TABLE + " as ON a." + Appointment.KEY_ID + " = as." +
+        return "SELECT * FROM " + Appointment.TABLE + " " + APP_TABLE +
+                " INNER JOIN " + AppointmentService.TABLE + " " + APPSER_TABLE + " ON " + APP_TABLE + "." + Appointment.KEY_ID + " = " + APPSER_TABLE + "." +
                 AppointmentService.KEY_APPOINTMENT_ID +
-                " INNER JOIN " + Service.TABLE + " s ON as." + AppointmentService.KEY_SERVICE_ID + " = s." +
+                " INNER JOIN " + Service.TABLE + " " + SER_TABLE + " ON " + APPSER_TABLE + "." + AppointmentService.KEY_SERVICE_ID + " = " + SER_TABLE + "." +
                 Service.KEY_ID;
     }
 
     public Cursor getAppointmentListWithServicesByCustomerId(int customerId) {
 
         String query = getRawAppointmentWithServicesQueryString() +
-                " WHERE a." + Appointment.KEY_customer_id + " = ?";
+                " WHERE " + APP_TABLE + "." + Appointment.KEY_customer_id + " = ?";
 
         String[] selectionArgs = {Integer.toString(customerId)};
 
@@ -111,7 +115,7 @@ public class AppointmentRepo extends DBRepo {
 
     public Cursor getAppointmentWithServicesById(int id){
         String query = getRawAppointmentWithServicesQueryString() +
-                " WHERE a." + Appointment.KEY_ID + " = ?";
+                " WHERE " + APP_TABLE + "." + Appointment.KEY_ID + " = ?";
 
         String[] selectionArgs = {Integer.toString(id)};
 

@@ -1,17 +1,13 @@
 package com.vubisu.acs;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.InputType;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,17 +15,13 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vubisu.acs.databinding.ActivityViewBinding;
 import com.vubisu.acs.databinding.AppointmentNewBinding;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by harryhobbes on 5/10/2017.
@@ -47,6 +39,8 @@ public class ViewActivity extends AppCompatActivity {
     AppointmentRepo appointmentRepo;
     PopupWindow mPopupWindow;
     int newRowId;
+    String datePattern = "dd/MM/yyyy";
+    String timePattern = "HH:mm";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,53 +108,36 @@ public class ViewActivity extends AppCompatActivity {
 
                 String lastServiceGroup = "";
                 LinearLayout groupServices = new LinearLayout(ViewActivity.this);
+                final ServiceHelper[] serviceHelpers = new ServiceHelper[serviceList.getCount()];
+                int serviceCount = 0;
 
                 // Loop over groups
                 do {
-                    String currentServiceGroup = serviceList.getString(serviceList.getColumnIndexOrThrow(Service.KEY_GROUP));
+                    // Create a service helper to assist in managing the template and retrieving the data
+                    ServiceHelper serviceHelper = new ServiceHelper(
+                            ViewActivity.this,
+                            Integer.parseInt(serviceList.getString(serviceList.getColumnIndexOrThrow(Service.KEY_ID))),
+                            serviceList.getString(serviceList.getColumnIndexOrThrow(Service.KEY_NAME)),
+                            serviceList.getString(serviceList.getColumnIndexOrThrow(Service.KEY_PRICE)),
+                            serviceList.getString(serviceList.getColumnIndexOrThrow(Service.KEY_GROUP))
+                    );
 
-                    if (!currentServiceGroup.equals(lastServiceGroup)) {
+                    if (!lastServiceGroup.equals(serviceHelper.getGroupText())) {
                         // Add next group heading
-                        TextView groupLabel = new TextView(ViewActivity.this);
-                        groupLabel.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-                        groupLabel.setPadding(0, 10, 0, 0);
-                        groupLabel.setText(currentServiceGroup);
-                        services.addView(groupLabel);
+                        services.addView(serviceHelper.getGroupLabelTemplate());
 
-                        // Add next group LinearLayout
-                        groupServices = new LinearLayout(ViewActivity.this);
-                        groupServices.setOrientation(LinearLayout.VERTICAL);
-                        groupServices.setPadding(18, 0, 0, 0);
-                        groupServices.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                        // Add next group layout
+                        groupServices = serviceHelper.getGroupLayoutTemplate();
                         services.addView(groupServices);
                     }
 
-                    // Add the services to the group LinearLayout
-                    LinearLayout serviceLayout = new LinearLayout(ViewActivity.this);
-                    serviceLayout.setOrientation(LinearLayout.HORIZONTAL);
-                    serviceLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-                    groupServices.addView(serviceLayout);
+                    groupServices.addView(serviceHelper.getAppointmentEditServiceTemplate());
 
-                    // Add the switch
-                    Switch serviceSwitch = new Switch(ViewActivity.this);
-                    serviceSwitch.setText(serviceList.getString(serviceList.getColumnIndexOrThrow(Service.KEY_NAME)));
-                    serviceSwitch.setLayoutParams(
-                            new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 3.0f)
-                    );
-                    serviceLayout.addView(serviceSwitch);
-
-                    // Add the editable price field
-                    TextInputEditText servicePrice = new TextInputEditText(ViewActivity.this);
-                    servicePrice.setLayoutParams(
-                            new LinearLayout.LayoutParams(40, LayoutParams.WRAP_CONTENT, 1.0f)
-                    );
-                    servicePrice.setText(serviceList.getString(serviceList.getColumnIndexOrThrow(Service.KEY_PRICE)));
-                    servicePrice.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    servicePrice.setGravity(Gravity.END);
-                    serviceLayout.addView(servicePrice);
+                    serviceHelpers[serviceCount] = serviceHelper;
 
                     // Set the check for if the next service is part of a new group
-                    lastServiceGroup = currentServiceGroup;
+                    lastServiceGroup = serviceHelper.getGroupText();
+                    serviceCount++;
                 } while(serviceList.moveToNext());
 
                 serviceList.close();
@@ -168,20 +145,27 @@ public class ViewActivity extends AppCompatActivity {
                 // Set the date and time to be now
                 Date today = new Date();
                 TextView date = (TextView)customView.findViewById(R.id.date);
-                String dateNow = new SimpleDateFormat("dd/MM/yyyy").format(today);
+                String dateNow = new SimpleDateFormat(datePattern).format(today);
                 date.setText(dateNow);
 
                 TextView time = (TextView)customView.findViewById(R.id.time);
-                String timeNow = new SimpleDateFormat("HH:mm").format(today);
+                String timeNow = new SimpleDateFormat(timePattern).format(today);
                 time.setText(timeNow);
 
                 // Add onclick events for cancel and new
                 customView.findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if ((newRowId = saveAppointmentToDB(customView)) > 0) {
+                        if ((newRowId = saveAppointmentToDB(customView, serviceHelpers)) > 0) {
                             mPopupWindow.dismiss();
                         }
+                    }
+                });
+
+                customView.findViewById(R.id.cancelButton).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mPopupWindow.dismiss();
                     }
                 });
 
@@ -233,11 +217,11 @@ public class ViewActivity extends AppCompatActivity {
         });
     }
 
-    public int saveAppointmentToDB(View customView) {
+    public int saveAppointmentToDB(View customView, ServiceHelper[] serviceHelpers) {
         Appointment appointment = new Appointment();
         AppointmentRepo appointmentRepo = new AppointmentRepo(this);
 
-        SimpleDateFormat appDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat appDateTime = new SimpleDateFormat(datePattern + " " + timePattern);
         TextView date = (TextView) customView.findViewById(R.id.date);
         TextView time = (TextView) customView.findViewById(R.id.time);
         TextView notes = (TextView) customView.findViewById(R.id.notes);
@@ -256,6 +240,19 @@ public class ViewActivity extends AppCompatActivity {
         appointment.notes = notes.getText().toString();
 
         int newRowId = appointmentRepo.insert(appointment);
+
+        // Iterate over the serviceIds, toggles and prices to save
+        AppointmentServiceRepo appointmentServiceRepo = new AppointmentServiceRepo(mContext);
+
+        for (int i = 0; i < serviceHelpers.length; i++) {
+            if (serviceHelpers[i].isChecked()) {
+                AppointmentService appointmentService = new AppointmentService();
+                appointmentService.service_ID = serviceHelpers[i].getId();
+                appointmentService.actual_price = Integer.parseInt(serviceHelpers[i].getPrice().getText().toString());
+                appointmentService.appointment_ID = newRowId;
+                appointmentServiceRepo.insert(appointmentService);
+            }
+        }
 
         return newRowId;
     }

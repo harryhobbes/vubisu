@@ -1,5 +1,6 @@
 package com.vubisu.acs;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,7 +22,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new AppointmentViewHolder(view);
+        return new AppointmentViewHolder(view, parent.getContext());
     }
 
     @Override

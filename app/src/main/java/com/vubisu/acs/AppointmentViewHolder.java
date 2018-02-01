@@ -16,11 +16,13 @@ import com.vubisu.acs.databinding.ItemAppointmentBinding;
 
 public class AppointmentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     ItemAppointmentBinding itemAppointmentBinding;
+    Context context;
     int recordId;
 
-    public AppointmentViewHolder(View itemView) {
+    public AppointmentViewHolder(View itemView, Context mContext) {
         super(itemView);
         itemAppointmentBinding = DataBindingUtil.bind(itemView);
+        context = mContext;
         itemView.setOnClickListener(this);
     }
 
@@ -29,6 +31,27 @@ public class AppointmentViewHolder extends RecyclerView.ViewHolder implements Vi
 
         itemAppointmentBinding.txtStart.setText(cursor.getString(cursor.getColumnIndexOrThrow(Appointment.KEY_start)));
         itemAppointmentBinding.txtNotes.setText(cursor.getString(cursor.getColumnIndexOrThrow(Appointment.KEY_notes)));
+
+        AppointmentRepo appointmentRepo = new AppointmentRepo(context);
+        Cursor services = appointmentRepo.getAppointmentWithServicesById(recordId);
+
+        if (services == null) {
+            return;
+        }
+
+        while (services.moveToNext()) {
+            ServiceHelper serviceHelper = new ServiceHelper(
+                    context,
+                    0,
+                    services.getString(services.getColumnIndexOrThrow(Service.KEY_NAME)),
+                    services.getString(services.getColumnIndexOrThrow(Service.KEY_PRICE)),
+                    null
+            );
+
+            itemAppointmentBinding.services.addView(serviceHelper.getAppointmentListServiceTemplate());
+        }
+
+        services.close();
     }
 
     @Override
