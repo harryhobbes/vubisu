@@ -7,17 +7,29 @@ import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.text.InputType;
 import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vubisu.acs.databinding.ActivityViewBinding;
 import com.vubisu.acs.databinding.AppointmentNewBinding;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by harryhobbes on 5/10/2017.
@@ -31,7 +43,10 @@ public class ViewActivity extends AppCompatActivity {
     StudentRepo studentRepo;
     Student student;
     Context mContext;
+    AppointmentListAdapter appointmentListAdapter;
+    AppointmentRepo appointmentRepo;
     PopupWindow mPopupWindow;
+    int newRowId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +74,15 @@ public class ViewActivity extends AppCompatActivity {
         binding.emailEditText.setText(student.email);
         binding.notesEditText.setText(student.notes);
 
+        binding.appointments.setLayoutManager(new LinearLayoutManager(this));
+        binding.appointments.setHasFixedSize(false);
+
+        appointmentListAdapter = new AppointmentListAdapter(null);
+        binding.appointments.setAdapter(appointmentListAdapter);
+
+        appointmentRepo = new AppointmentRepo(this);
+        appointmentListAdapter.updateCursor(appointmentRepo.getAppointmentList());
+
         binding.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,7 +102,88 @@ public class ViewActivity extends AppCompatActivity {
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
 
                 // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.appointment_new,null);
+                final View customView = inflater.inflate(R.layout.appointment_new,null);
+                LinearLayout services = (LinearLayout) customView.findViewById(R.id.services);
+
+                ServiceRepo serviceRepo = new ServiceRepo(mContext);
+                Cursor serviceList = serviceRepo.getServiceList(
+                        null,
+                        null,
+                        Service.KEY_GROUP + ", " + Service.KEY_NAME
+                );
+
+                String lastServiceGroup = "";
+                LinearLayout groupServices = new LinearLayout(ViewActivity.this);
+
+                // Loop over groups
+                do {
+                    String currentServiceGroup = serviceList.getString(serviceList.getColumnIndexOrThrow(Service.KEY_GROUP));
+
+                    if (!currentServiceGroup.equals(lastServiceGroup)) {
+                        // Add next group heading
+                        TextView groupLabel = new TextView(ViewActivity.this);
+                        groupLabel.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                        groupLabel.setPadding(0, 10, 0, 0);
+                        groupLabel.setText(currentServiceGroup);
+                        services.addView(groupLabel);
+
+                        // Add next group LinearLayout
+                        groupServices = new LinearLayout(ViewActivity.this);
+                        groupServices.setOrientation(LinearLayout.VERTICAL);
+                        groupServices.setPadding(18, 0, 0, 0);
+                        groupServices.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                        services.addView(groupServices);
+                    }
+
+                    // Add the services to the group LinearLayout
+                    LinearLayout serviceLayout = new LinearLayout(ViewActivity.this);
+                    serviceLayout.setOrientation(LinearLayout.HORIZONTAL);
+                    serviceLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    groupServices.addView(serviceLayout);
+
+                    // Add the switch
+                    Switch serviceSwitch = new Switch(ViewActivity.this);
+                    serviceSwitch.setText(serviceList.getString(serviceList.getColumnIndexOrThrow(Service.KEY_NAME)));
+                    serviceSwitch.setLayoutParams(
+                            new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 3.0f)
+                    );
+                    serviceLayout.addView(serviceSwitch);
+
+                    // Add the editable price field
+                    TextInputEditText servicePrice = new TextInputEditText(ViewActivity.this);
+                    servicePrice.setLayoutParams(
+                            new LinearLayout.LayoutParams(40, LayoutParams.WRAP_CONTENT, 1.0f)
+                    );
+                    servicePrice.setText(serviceList.getString(serviceList.getColumnIndexOrThrow(Service.KEY_PRICE)));
+                    servicePrice.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    servicePrice.setGravity(Gravity.END);
+                    serviceLayout.addView(servicePrice);
+
+                    // Set the check for if the next service is part of a new group
+                    lastServiceGroup = currentServiceGroup;
+                } while(serviceList.moveToNext());
+
+                serviceList.close();
+
+                // Set the date and time to be now
+                Date today = new Date();
+                TextView date = (TextView)customView.findViewById(R.id.date);
+                String dateNow = new SimpleDateFormat("dd/MM/yyyy").format(today);
+                date.setText(dateNow);
+
+                TextView time = (TextView)customView.findViewById(R.id.time);
+                String timeNow = new SimpleDateFormat("HH:mm").format(today);
+                time.setText(timeNow);
+
+                // Add onclick events for cancel and new
+                customView.findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if ((newRowId = saveAppointmentToDB(customView)) > 0) {
+                            mPopupWindow.dismiss();
+                        }
+                    }
+                });
 
                 /*
                     public PopupWindow (View contentView, int width, int height)
@@ -122,8 +227,36 @@ public class ViewActivity extends AppCompatActivity {
                         y : the popup's y location offset
                 */
                 // Finally, show the popup window at the center location of root relative layout
+                mPopupWindow.setFocusable(true);
                 mPopupWindow.showAtLocation(binding.viewLayout, Gravity.CENTER,0,0);
             }
         });
+    }
+
+    public int saveAppointmentToDB(View customView) {
+        Appointment appointment = new Appointment();
+        AppointmentRepo appointmentRepo = new AppointmentRepo(this);
+
+        SimpleDateFormat appDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        TextView date = (TextView) customView.findViewById(R.id.date);
+        TextView time = (TextView) customView.findViewById(R.id.time);
+        TextView notes = (TextView) customView.findViewById(R.id.notes);
+
+        try {
+            Date dateTime = appDateTime.parse(
+                    date.getText().toString()
+                            + " " +
+                            time.getText().toString()
+            );
+            appointment.start = (int) dateTime.getTime()/1000;
+        } catch (Exception e) {
+            Log.d("NEW APPOINTMENT", e.getMessage());
+            return 0;
+        }
+        appointment.notes = notes.getText().toString();
+
+        int newRowId = appointmentRepo.insert(appointment);
+
+        return newRowId;
     }
 }

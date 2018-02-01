@@ -45,6 +45,7 @@ public class AppointmentRepo extends DBRepo {
                         "rowid as " + Appointment._ID,
                         Appointment.KEY_ID,
                         Appointment.KEY_start,
+                        Appointment.KEY_notes
                 };
                 break;
         }

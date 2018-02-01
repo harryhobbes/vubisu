@@ -62,7 +62,7 @@ public class ServiceListActivity extends AppCompatActivity {
         if (searchView != null && searchView.getQuery().length() != 0) {
             serviceListAdapter.updateCursor(serviceRepo.getServiceListByKeyword(searchView.getQuery().toString()));
         } else {
-            serviceListAdapter.updateCursor(serviceRepo.getServiceList());
+            serviceListAdapter.updateCursor(serviceRepo.getServiceList(null, null, null));
         }
         serviceListAdapter.notifyDataSetChanged();
     }

@@ -36,6 +36,7 @@
     <string name="customer_view_phone_hint"></string>
     <string name="customer_view_note_label">Notes:</string>
     <string name="customer_view_note_hint"></string>
+    <string name="customer_view_appointments_label">Appointments</string>
 
     <!-- List Service Strings -->
     <string name="service_list_name_hint">Cut and Colour</string>
@@ -65,6 +66,8 @@
     <!-- New Appointment Strings -->
     <string name="appointment_new_date_label">Date:</string>
     <string name="appointment_new_date_hint">24/06/2018</string>
+    <string name="appointment_new_time_label">Time:</string>
+    <string name="appointment_new_time_hint">16:45</string>
     <string name="appointment_new_serivces_label">Services:</string>
     <string name="appointment_new_note_label">Note:</string>
     <string name="appointment_new_note_hint">Notes</string>

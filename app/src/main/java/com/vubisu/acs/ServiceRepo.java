@@ -60,14 +60,14 @@ public class ServiceRepo extends DBRepo {
         return super.update(getContentValues("update", service), Service.KEY_ID, service.service_ID);
     }
 
-    public Cursor getServiceList() {
+    public Cursor getServiceList(String groupBy, String having, String orderBy) {
         return super.getList(
                 getStringArray("list"),
                 null,
                 null,
-                null,
-                null,
-                null
+                groupBy,
+                having,
+                orderBy
         );
 
 

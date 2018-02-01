@@ -23,7 +23,7 @@ import com.vubisu.acs.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    RecyclerAdapter recyclerAdapter;
+    CustomerListAdapter customerListAdapter;
     Cursor cursor;
     StudentRepo studentRepo;
     SearchManager searchManager;
@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         // Create and set the recyclerview and adapter
         studentRepo = new StudentRepo(this);
 
-        recyclerAdapter = new RecyclerAdapter(this, null);
-        binding.recycleView.setAdapter(recyclerAdapter);
+        customerListAdapter = new CustomerListAdapter(null);
+        binding.recycleView.setAdapter(customerListAdapter);
 
         // Create onclick listener on floating action button
         binding.newButton.setOnClickListener(new View.OnClickListener() {
@@ -60,11 +60,11 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         if (searchView != null && searchView.getQuery().length() != 0) {
-            recyclerAdapter.updateCursor(studentRepo.getStudentListByKeyword(searchView.getQuery().toString()));
+            customerListAdapter.updateCursor(studentRepo.getStudentListByKeyword(searchView.getQuery().toString()));
         } else {
-            recyclerAdapter.updateCursor(studentRepo.getStudentList());
+            customerListAdapter.updateCursor(studentRepo.getStudentList());
         }
-        recyclerAdapter.notifyDataSetChanged();
+        customerListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -84,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onQueryTextSubmit(String s) {
                     Log.d(TAG, "onQueryTextSubmit ");
                     cursor=studentRepo.getStudentListByKeyword(s);
-                    recyclerAdapter.updateCursor(cursor);
-                    recyclerAdapter.notifyDataSetChanged();
+                    customerListAdapter.updateCursor(cursor);
+                    customerListAdapter.notifyDataSetChanged();
                     binding.recycleView.scrollToPosition(0);
                     return false;
                 }
@@ -94,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onQueryTextChange(String s) {
                     Log.d(TAG, "onQueryTextChange ");
                     cursor=studentRepo.getStudentListByKeyword(s);
-                    recyclerAdapter.updateCursor(cursor);
-                    recyclerAdapter.notifyDataSetChanged();
+                    customerListAdapter.updateCursor(cursor);
+                    customerListAdapter.notifyDataSetChanged();
                     binding.recycleView.scrollToPosition(0);
                     return false;
                 }
